@@ -13,26 +13,24 @@
                 FontSize="40"/>
                 
                 <Label Content="Arquivo de download:" 
-                Margin="50, 100, 0, 0" 
-                Foreground="Black" 
-                FontSize="25"/>
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Margin="50, 97.5, 0, 0" 
+                Foreground="Black"
+                Height="30" 
+                FontSize="20"/>
                 
-                <Border PointerPressed="SearchFile"
+                <Label Name="PathExibicao"
+                Content="Selecione seu arquivo."
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Margin="350, 102.5, 0, 0"
-                Width="250"
-                Height="7"
-                IsReadOnly="true" 
+                Margin="280, 100, 0, 0"
+                Width="300"
+                Height="30"
+                Foreground="Black"
                 BorderBrush="Black"
                 Background="White"
-                BorderThickness="2">
-
-                        <TextBlock Name="PathExibicao"
-                        VerticalAlignment="Center"
-                        Margin="5,0"
-                        Text="Selecione o arquivo"/>
-                </Border>
+                BorderThickness="2"/>
                 
                 <Button Name="ConfirmButton"
                 Content="Selecionar" 
@@ -47,6 +45,44 @@
                 BorderThickness="2"
                 Foreground="Black"/>
 
+                <Button Content="Instalar"
+                Name="DownloadButton"
+                Click="Instalar"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                BorderBrush="Black"
+                BorderThickness="2"
+                Background="White"
+                Foreground="Black"
+                Width="85"
+                Height="30"
+                Margin="600, 100, 0, 0"/>
+
+                <Button Content="Localizar pacotes"
+                Name="SearchButton"
+                Click="Procurar"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                BorderBrush="Black"
+                BorderThickness="2"
+                Background="White"
+                Foreground="Black"
+                Width="130"
+                Height="30"
+                Margin="180, 150, 0, 0"/>
+
+                <Button Content="Deletar programa"
+                Name="DeleteButton"
+                Click="Deletar"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                BorderBrush="Black"
+                BorderThickness="2"
+                Background="White"
+                Foreground="Black"
+                Width="130"
+                Height="30"
+                Margin="330, 150, 0, 0"/>
                 
         </Grid>
 </Window>
