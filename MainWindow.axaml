@@ -6,7 +6,41 @@
         x:Class="EncurtadorDownload.MainWindow"
         Title="Encurtador de Downloads">
     
-        <StackPanel Spacing="10" Margin="20" Background="White">
-                <Label Content="Encurtador de Download" HorizontalAlignment="Center" Foreground="Black" FontSize="30"/>
-        </StackPanel>
+        <Grid Background="White">
+                <Label Content="Encurtador de Download" 
+                HorizontalAlignment="Center" 
+                Foreground="Black" 
+                FontSize="40"/>
+                
+                <Label Content="Arquivo de download:" 
+                Margin="50, 100, 0, 0" 
+                Foreground="Black" 
+                FontSize="25"/>
+                
+                <TextBox Name="PathExibicao"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="350, 102.5, 0, 0"
+                Width="250"
+                Height="7"
+                IsReadOnly="true" 
+                BorderBrush="Black"
+                Background="White"
+                BorderThickness="2"/>
+                
+                <Button Name="ConfirmButton"
+                Content="Selecionar" 
+                Click="SelectArchive_Click"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Width="85"
+                Height="30"
+                Margin="75, 150, 0, 0"
+                BorderBrush="Black"
+                Background="White"
+                BorderThickness="2"
+                Foreground="Black"/>
+
+                
+        </Grid>
 </Window>
