@@ -17,7 +17,7 @@
                 Foreground="Black" 
                 FontSize="25"/>
                 
-                <TextBox Name="PathExibicao"
+                <Border PointerPressed="SearchFile"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Margin="350, 102.5, 0, 0"
@@ -26,11 +26,17 @@
                 IsReadOnly="true" 
                 BorderBrush="Black"
                 Background="White"
-                BorderThickness="2"/>
+                BorderThickness="2">
+
+                        <TextBlock Name="PathExibicao"
+                        VerticalAlignment="Center"
+                        Margin="5,0"
+                        Text="Selecione o arquivo"/>
+                </Border>
                 
                 <Button Name="ConfirmButton"
                 Content="Selecionar" 
-                Click="SelectArchive_Click"
+                Click="SelectArchive"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
                 Width="85"
