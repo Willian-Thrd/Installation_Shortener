@@ -108,7 +108,6 @@ public partial class MainWindow : Window
             process.Start();
             process.BeginOutputReadLine();
         }
-        
     }
 
     private void Procurar(object? sender, RoutedEventArgs e)
