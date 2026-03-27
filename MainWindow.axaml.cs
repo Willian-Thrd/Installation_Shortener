@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Avalonia.Controls;
+using Avalonia.Controls.Notifications;
 using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Templates;
 using Avalonia.Interactivity;
@@ -16,6 +17,7 @@ public partial class MainWindow : Window
 
     string? pathWay;
     string? fileName;
+    string? packageName;
 
     public MainWindow()
     {
@@ -49,8 +51,9 @@ public partial class MainWindow : Window
             Efeito(btnSearch);
             Efeito(btnDel);
         }
-    }
+    
 
+    }
     private void Efeito(Button button)
     {
         button.Template = new FuncControlTemplate<Button>((parent, scope) =>
@@ -80,6 +83,7 @@ public partial class MainWindow : Window
 
     private void Instalar(object? sender, RoutedEventArgs e)
     {
+
         if(string.IsNullOrWhiteSpace(pathWay))
         {
             var notific = new NotificationWindow("Preencha todos os campos para prosseguir com o download.", "ERRO", "Red");
@@ -89,62 +93,65 @@ public partial class MainWindow : Window
         {
             var psi = new ProcessStartInfo
             {
-                FileName = "pkexec",
-                ArgumentList = {"apt", "install", pathWay},
+                FileName = "dpkg-deb",
+                Arguments = $"-f \"{pathWay}\" Package",
                 RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = false
+                UseShellExecute = false,
+                CreateNoWindow = true
             };
-
-            var process = new Process();
-            process.StartInfo = psi;
-
-            process.OutputDataReceived += (s, e) =>
-            {
-                if (e.Data != null)
-                Console.WriteLine(e.Data);
-            };
-
-            process.Start();
-            process.BeginOutputReadLine();
         }
+        
     }
 
     private void Procurar(object? sender, RoutedEventArgs e)
     {
-        if(string.IsNullOrWhiteSpace(pathWay))
-        {
-            var notific = new NotificationWindow("Preencha todos os campos para procurar o pacote.", "ERRO", "Red");
-            notific.Timer();
-        }
-        else
+        if (pathWay == null) {
+            new NotificationWindow("Por favor, preencha todos os campos", "ERROR", "Red").Show();
+        } 
+        else 
         {
             var psi = new ProcessStartInfo
             {
                 FileName = "dpkg-deb",
-                Arguments = $"-f \"{pathWay}\" Package",
+                ArgumentList = {$"-c {pathWay}"},
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false,
-                CreateNoWindow = false
+                CreateNoWindow = true
             };
 
             var process = Process.Start(psi);
-
-            string output = process.StandardOutput.ReadToEnd();
-            string error = process.StandardError.ReadToEnd();
-
+            
+            packageName = process.StandardOutput.ReadToEnd().Trim();
             process.WaitForExit();
 
-            if (!string.IsNullOrWhiteSpace(output))
+            var psi2 = new ProcessStartInfo
             {
-                new NotificationWindow(output, "NOME DO PACOTE", "Lime").Show();
-            } else
+                FileName = "dpkg",
+                ArgumentList = {$"-l {packageName}"},
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+            
+            var process2 = Process.Start(psi2);
+            if (process2 == null) return;
+
+            var result = process2.StandardOutput.ReadToEnd();
+            var error = process2.StandardError.ReadToEnd();
+
+            process2.WaitForExit();
+
+            if (!string.IsNullOrWhiteSpace(error))
             {
-                new NotificationWindow(error, "ERROR", "Red").Show();
+                new NotificationWindow(error, "Console", "Red").Show();
+            }
+            else
+            {
+                new NotificationWindow(result, "Console", "Lime").Show();
             }
         }
-        
     }
 
     private void Deletar(object? sender, RoutedEventArgs e)
@@ -183,6 +190,5 @@ public partial class MainWindow : Window
             var notific = new NotificationWindow("O item foi selecionado", "Notificação", "White");
             notific.Timer();
         }
-    }
-        
+    }   
 }

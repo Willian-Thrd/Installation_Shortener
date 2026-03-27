@@ -68,8 +68,8 @@ public class Aviso : Window
         Resultado = true;
         var psi = new ProcessStartInfo
         {
-            FileName = "sudo",
-            ArgumentList = {"apt", "purge", package}
+            FileName = "pkexec",
+            ArgumentList = {"apt", "purge", "-y", package}
         };
         Process.Start(psi);
         this.Close();

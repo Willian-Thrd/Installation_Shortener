@@ -1,0 +1,32 @@
+if(string.IsNullOrWhiteSpace(pathWay))
+        {
+            var notific = new NotificationWindow("Preencha todos os campos para procurar o pacote.", "ERRO", "Red");
+            notific.Timer();
+        }
+        else
+        {
+            var psi = new ProcessStartInfo
+            {
+                FileName = "dpkg-query",
+                Arguments = $"",
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            var process = Process.Start(psi);
+
+            string output = process.StandardOutput.ReadToEnd();
+            string error = process.StandardError.ReadToEnd();
+
+            process.WaitForExit();
+
+            if (!string.IsNullOrWhiteSpace(output))
+            {
+                new NotificationWindow(output, "NOME DO PACOTE", "Lime").Show();
+            } else
+            {
+                new NotificationWindow(error, "ERROR", "Red").Show();
+            }
+        }
