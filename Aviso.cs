@@ -46,7 +46,7 @@ public class Aviso : Window
             BorderBrush = Brushes.White,
             BorderThickness = new Avalonia.Thickness(2)
         };
-        dimissButton.Click += Dimiss;
+        dimissButton.Click += Dismiss;
 
         Canvas.SetTop(textBox, 20);
         Canvas.SetLeft(textBox, 20);
@@ -75,7 +75,7 @@ public class Aviso : Window
         this.Close();
     }
 
-    private void Dimiss(object? snder, RoutedEventArgs e)
+    private void Dismiss(object? snder, RoutedEventArgs e)
     {
         Resultado = false;
         this.Close();

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using Avalonia;
 using Avalonia.Controls;
@@ -6,8 +8,10 @@ using Avalonia.Media;
 
 public class DependsError : Window
 {
-    public DependsError(string title, string mensage)
+    string dependency;
+    public DependsError(string title, string mensage, string dependency)
     {
+        this.dependency = dependency;
         Title = title;
         Width = 700;
         Height = 700;
@@ -41,16 +45,38 @@ public class DependsError : Window
             BorderBrush = Brushes.White,
             BorderThickness = new Avalonia.Thickness(2)
         };
-
-
+        buttonOpt2.Click += Dismiss;
     }
 
-    public void Confirmate(object? sender, RoutedEventArgs e)
+    public async void Confirmate(object? sender, RoutedEventArgs e)
     {
-        
+        var psi = new ProcessStartInfo
+        {
+            FileName = "pkexec",
+            Arguments = $"apt install -y {dependency}",
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            UseShellExecute = false
+        };
+
+        var process = Process.Start(psi);
+
+        string output = await process.StandardOutput.ReadToEndAsync();
+        string error = await process.StandardError.ReadToEndAsync();
+
+        await process.WaitForExitAsync();
+
+        if (!string.IsNullOrWhiteSpace(error))
+        {
+            new NotificationWindow(error, "ERROR", "Red").Show();
+        } 
+        else
+        {
+            new NotificationWindow("Pacote instalado com sucesso", "Sucesso.", "White").Show();
+        }
     }
 
-    public void Dimiss(object? sender, RoutedEventArgs e)
+    public void Dismiss(object? sender, RoutedEventArgs e)
     {
         
     }

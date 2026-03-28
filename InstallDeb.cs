@@ -1,11 +1,37 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
-using Avalonia.Controls.Documents;
 
 public class InstallDeb
 {
+    public enum AptErrorType
+    {
+        DependencyError,
+        PackageBroken,
+        None,
+        HeldPackage
+    }
+
+    public static AptErrorType DetectError(string error)
+    {
+        error = error.ToLower();
+
+        if (error.Contains("depends:") || error.Contains("dependências"))
+        {
+            return AptErrorType.DependencyError;
+        } else if (error.Contains("unmet dependencies") || error.Contains("impossível corrigir"))
+        {
+            return AptErrorType.PackageBroken;
+        } else if (error.Contains("Held broken packages") || error.Contains("hold"))
+        {
+            return AptErrorType.HeldPackage;
+        }
+
+        return AptErrorType.None;
+    }
+
     public InstallDeb(string pathway)
     {
         bool IsDependencyError(string error)
@@ -15,12 +41,14 @@ public class InstallDeb
                 error.Contains("but it is not installable");
         }
 
+        
+
         string path = pathway;
 
         var psi = new ProcessStartInfo
             {
                 FileName = "pkexec",
-                Arguments = $"apt -instal -y \"{path}\"",
+                Arguments = $"apt install -y \"{path}\"",
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false,
@@ -40,7 +68,9 @@ public class InstallDeb
 
             if (IsDependencyError(error))
             {
-                new NotificationWindow(error, "DEPENDENCY ERROR", "Red").Show();
+                var extractDependencies = ExtractDependencies(error);
+                string dependency = Convert.ToString(extractDependencies);
+                new DependsError(error, "DEPENDENCY ERROR", dependency).Show();
             }
             }
             else
@@ -54,7 +84,7 @@ public class InstallDeb
     {
         var dependencies = new List<string>();
 
-        var matches = Regex.Matches(error, @"Depends:\s*([a-zA-Z0-9\-\._]+)");
+        var matches = Regex.Matches(error, @"Depends:\s*([a-zA-Z0-9\-\._]+)(?:.s\*\(.*?\))?");
 
         foreach (Match match in matches)
         {
