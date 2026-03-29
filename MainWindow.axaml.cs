@@ -16,7 +16,6 @@ public partial class MainWindow : Window
 {
 
     string? pathWay;
-    string? fileName;
 
     public MainWindow()
     {

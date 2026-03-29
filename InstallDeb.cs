@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 
 public class InstallDeb
@@ -21,10 +19,12 @@ public class InstallDeb
         if (error.Contains("depends:") || error.Contains("dependências"))
         {
             return AptErrorType.DependencyError;
-        } else if (error.Contains("unmet dependencies") || error.Contains("impossível corrigir"))
+        } 
+        else if (error.Contains("unmet") || error.Contains("impossível"))
         {
             return AptErrorType.PackageBroken;
-        } else if (error.Contains("Held broken packages") || error.Contains("hold"))
+        } 
+        else if (error.Contains("Held") || error.Contains("hold"))
         {
             return AptErrorType.HeldPackage;
         }
@@ -34,15 +34,6 @@ public class InstallDeb
 
     public InstallDeb(string pathway)
     {
-        bool IsDependencyError(string error)
-        {
-            return error.Contains("Depends:") ||
-                error.Contains("dependências desencontradas") ||
-                error.Contains("but it is not installable");
-        }
-
-        
-
         string path = pathway;
 
         var psi = new ProcessStartInfo
@@ -57,21 +48,19 @@ public class InstallDeb
 
             var process = Process.Start(psi);
 
-            string output = process.StandardOutput.ReadToEnd();
+            if (process == null)
+            {
+                new NotificationWindow("Erro ao iniciar processo.", "ERROR", "Red").Show();
+                return;
+            }
+
             string error = process.StandardError.ReadToEnd();
 
             process.WaitForExit();
 
-            if (!string.IsNullOrWhiteSpace(error))
+            if (process.ExitCode != 0)
             {
-                new NotificationWindow(error, "ERROR", "Red").Show();
-
-            if (IsDependencyError(error))
-            {
-                var extractDependencies = ExtractDependencies(error);
-                string dependency = Convert.ToString(extractDependencies);
-                new DependsError(error, "DEPENDENCY ERROR", dependency).Show();
-            }
+                ErrorRepair(error);
             }
             else
             {
@@ -82,15 +71,36 @@ public class InstallDeb
 
     public static List<string> ExtractDependencies(string error)
     {
-        var dependencies = new List<string>();
+        var dependencies = new HashSet<string>();
 
-        var matches = Regex.Matches(error, @"Depends:\s*([a-zA-Z0-9\-\._]+)(?:.s\*\(.*?\))?");
+        var matches = Regex.Matches(error, @"Depends:\s*([a-zA-Z0-9\-\._]+)(?:\s*\(.*?\))?");
 
         foreach (Match match in matches)
         {
             dependencies.Add(match.Groups[1].Value);
         }
 
-        return dependencies;
+        return new List<string>(dependencies);
+    }
+
+    public static void ErrorRepair(string error)
+    {
+        var dep = ExtractDependencies(error);
+        var type = DetectError(error);
+
+        switch (type)
+        {
+            case AptErrorType.DependencyError:
+                new DependsError("ERRO DE DEPENDÊNCIA", error, dep, type).Show();
+            break;
+
+            case AptErrorType.HeldPackage:
+                new DependsError("ERRO DE PACOTE", error, dep, type).Show();
+            break;
+
+            case AptErrorType.PackageBroken:
+                new DependsError("ERRO DE PACOTE", error, dep, type).Show();
+            break;
+        }
     }
 }
