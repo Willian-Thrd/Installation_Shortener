@@ -15,6 +15,7 @@ public class Aviso : Window
         Title = title;
         Width = 600;
         Height = 300;
+        Background = Brushes.Black;
 
         var canva = new Canvas
         {
@@ -26,6 +27,7 @@ public class Aviso : Window
         {
             Text = mensage,
             IsReadOnly = true,
+            Background = Brushes.Black,
             VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
             HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
             BorderBrush = Brushes.Black,
@@ -36,7 +38,7 @@ public class Aviso : Window
         {
             Content = "Confirmar",
             BorderBrush = Brushes.White,
-            BorderThickness = new Avalonia.Thickness(2)
+            BorderThickness = new Thickness(2)
         };
         confirmButton.Click += Confirmate;
 
@@ -44,7 +46,7 @@ public class Aviso : Window
         {
             Content = "Negar",
             BorderBrush = Brushes.White,
-            BorderThickness = new Avalonia.Thickness(2)
+            BorderThickness = new Thickness(2)
         };
         dimissButton.Click += Dismiss;
 

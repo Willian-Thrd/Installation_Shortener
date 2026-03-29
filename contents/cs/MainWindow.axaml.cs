@@ -25,8 +25,9 @@ public partial class MainWindow : Window
         var btnDownload = this.FindControl<Button>("DownloadButton");
         var btnSearch = this.FindControl<Button>("SearchButton");
         var btnDel = this.FindControl<Button>("DeleteButton");
+        var btnRepair = this.FindControl<Button>("RepairButton");
 
-        if (btnSelected != null && btnDownload != null && btnSearch != null && btnDel != null)
+        if (btnSelected != null && btnDownload != null && btnSearch != null && btnDel != null && btnRepair != null)
         {
             btnSelected.Background = Brushes.White;
             btnSelected.BorderBrush = Brushes.Black;
@@ -44,10 +45,15 @@ public partial class MainWindow : Window
             btnDel.BorderBrush = Brushes.Black;
             btnDel.Foreground = Brushes.Black;
 
+            btnRepair.Background = Brushes.White;
+            btnRepair.BorderBrush = Brushes.Black;
+            btnRepair.Foreground = Brushes.Black;
+
             Efeito(btnSelected);   
             Efeito(btnDownload);
             Efeito(btnSearch);
             Efeito(btnDel);
+            Efeito(btnRepair);
         }
     
 
@@ -155,4 +161,9 @@ public partial class MainWindow : Window
             notific.Timer();
         }
     }   
+
+    private void RepairPackage(object? sender, RoutedEventArgs e)
+    {
+        new RepairWindow().Show();
+    }
 }

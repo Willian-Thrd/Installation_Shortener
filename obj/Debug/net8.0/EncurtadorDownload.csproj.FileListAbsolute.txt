@@ -1,3 +1,10 @@
+/media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/contents/others/obj/Debug/net8.0/EncurtadorDownload.csproj.AssemblyReference.cache
+/media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/contents/others/obj/Debug/net8.0/Avalonia/Resources.Inputs.cache
+/media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/contents/others/obj/Debug/net8.0/EncurtadorDownload.GeneratedMSBuildEditorConfig.editorconfig
+/media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/contents/others/obj/Debug/net8.0/EncurtadorDownload.AssemblyInfoInputs.cache
+/media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/contents/others/obj/Debug/net8.0/EncurtadorDownload.AssemblyInfo.cs
+/media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/contents/others/obj/Debug/net8.0/EncurtadorDownload.csproj.CoreCompileInputs.cache
+/media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/contents/others/obj/Debug/net8.0/EncurtadorDownload.sourcelink.json
 /media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/bin/Debug/net8.0/EncurtadorDownload
 /media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/bin/Debug/net8.0/EncurtadorDownload.deps.json
 /media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/bin/Debug/net8.0/EncurtadorDownload.runtimeconfig.json
@@ -66,10 +73,10 @@
 /media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/obj/Debug/net8.0/EncurtadorDownload.AssemblyInfoInputs.cache
 /media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/obj/Debug/net8.0/EncurtadorDownload.AssemblyInfo.cs
 /media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/obj/Debug/net8.0/EncurtadorDownload.csproj.CoreCompileInputs.cache
+/media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/obj/Debug/net8.0/EncurtadorDownload.sourcelink.json
 /media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/obj/Debug/net8.0/EncurtadorDownload.csproj.CopyComplete
 /media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/obj/Debug/net8.0/EncurtadorDownload.dll
 /media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/obj/Debug/net8.0/refint/EncurtadorDownload.dll
 /media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/obj/Debug/net8.0/EncurtadorDownload.pdb
 /media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/obj/Debug/net8.0/EncurtadorDownload.genruntimeconfig.cache
 /media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/obj/Debug/net8.0/ref/EncurtadorDownload.dll
-/media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/obj/Debug/net8.0/EncurtadorDownload.sourcelink.json

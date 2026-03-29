@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
 
@@ -9,7 +10,8 @@ public class NotificationWindow : Window
     {
         Title = title;
         Width = 250;
-        Height = 100;
+        Height = 150;
+        Background = Brushes.Black;
 
         var brush = new SolidColorBrush(Color.Parse(color));
 
@@ -17,19 +19,33 @@ public class NotificationWindow : Window
         {
             Text = mensage,
             IsReadOnly = true,
+            Width = 200,
             BorderThickness = new Avalonia.Thickness(0),
-            Background = Brushes.Transparent,
+            Background = Brushes.Black,
             VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
             HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
             TextWrapping = TextWrapping.Wrap,
+            TextAlignment = TextAlignment.Center,
             Foreground = brush
+        };
+
+        var canvas = new Canvas
+        {
+            Width = 250,
+            Height = 100,
+            Background = Brushes.Black  
         };
         
         var copyButton = new Button
         {
             Content = "Copiar",
-            HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
-            Margin = new Avalonia.Thickness(0, 10, 0, 0)
+            BorderBrush = Brushes.White,
+            BorderThickness = new Thickness(2),
+            Foreground = Brushes.White,
+            HorizontalContentAlignment = Avalonia.Layout.HorizontalAlignment.Center,
+            FontSize = 12,
+            Width = 90,
+            Height = 28
         };
 
         copyButton.Click += async (sender, e) =>
@@ -48,17 +64,17 @@ public class NotificationWindow : Window
             }
         };
 
-        var stack = new StackPanel
-        {
-            Orientation = Avalonia.Layout.Orientation.Vertical,
-            Children =
-            {
-                textBox,
-                copyButton
-            }
-        };
+        Canvas.SetTop(textBox, 10);
+        Canvas.SetLeft(textBox, 25);
+        Canvas.SetRight(textBox, 25);
+        Canvas.SetTop(copyButton, 65);
+        Canvas.SetLeft(copyButton, 80);
+        Canvas.SetRight(copyButton, 80);
 
-        Content = stack;
+        canvas.Children.Add(textBox);
+        canvas.Children.Add(copyButton);
+
+        Content = canvas;
     }
 
     public async void Timer()

@@ -19,8 +19,8 @@ build_property.ProjectDir = /media/willian-theodoro/HD secundário/Trabalhos/Pro
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 
-[/media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/App.axaml]
+[/media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/contents/axml/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[/media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/MainWindow.axaml]
+[/media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/contents/axml/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

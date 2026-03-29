@@ -2,8 +2,6 @@ using System.Diagnostics;
 
 public class DebPackages
 {
-    
-    
     public string GetFile(string file)
     {
         var psi = new ProcessStartInfo

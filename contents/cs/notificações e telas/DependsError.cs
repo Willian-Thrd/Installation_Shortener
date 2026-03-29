@@ -20,6 +20,7 @@ public class DependsError : Window
         Title = title;
         Width = 600;
         Height = 400;
+        Background = Brushes.Black;
 
         var canvas = new Canvas
         {
@@ -42,6 +43,7 @@ public class DependsError : Window
             Text = "Parece que houve um erro de instalação, \ngostaria de reparar as dependências/pacotes?",
             Width = 500,
             IsReadOnly = true,
+            Background = Brushes.Transparent,
             TextAlignment = TextAlignment.Center,
             Foreground = Brushes.White,
             BorderBrush = Brushes.Black
