@@ -22,5 +22,11 @@ build_property.EnableGeneratedComInterfaceComImportInterop =
 [/media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[/media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/MainWindow.axaml]
+[/media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/View/MainWindow.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/View/NotificacaoDeletar.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/View/RepairWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

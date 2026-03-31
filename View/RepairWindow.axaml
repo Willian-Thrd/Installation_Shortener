@@ -1,0 +1,36 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+        x:Class="EncurtadorDownload.RepairWindow"
+        Title="Reparador de pacotes"
+        WindowState="Normal"
+        Width="600"
+        Height="400">
+
+    <Canvas Width="600" Height="400" Background="White">
+        <!--Título do programa-->
+        <Label Content="Reparador de pacotes" Canvas.Top="20" 
+        Canvas.Left="161" Canvas.Right="161" Width="278" 
+        FontSize="26" Foreground="Black"/>
+        
+        <!--Botão de corrigir dependências-->
+        <Button Content="Corrigir Dependências" Click="RepairDep" 
+        Canvas.Left="40" Canvas.Top="100" Foreground="Black" 
+        BorderBrush="Black" BorderThickness="2" Name="RepairButton"
+        Height="26" FontSize="14" Width="165" HorizontalContentAlignment="Center"/>
+    
+        <!--Botão finalizar download-->
+        <Button Content="Finalizar intalação de pacotes" Click="FinishDownload"
+        Canvas.Left="40" Canvas.Top="146" Foreground="Black" 
+        BorderBrush="Black" BorderThickness="2" Name="FinalizeButton"
+        Height="26" FontSize="14" Width="215" HorizontalContentAlignment="Center"/>
+
+        <!--Botão localizar pacotes quebrados-->
+        <Button Content="Ver Pacote(s) quebrado(s)" Click="SearchBroken"
+        Canvas.Left="40" Canvas.Top="190" Foreground="Black" 
+        BorderBrush="Black" BorderThickness="2" Name="SearchButton"
+        Height="30" FontSize="14" Width="215" HorizontalContentAlignment="Center"/>
+    </Canvas>
+</Window>

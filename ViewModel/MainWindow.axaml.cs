@@ -1,10 +1,5 @@
-using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Avalonia.Controls;
-using Avalonia.Controls.Notifications;
-using Avalonia.Controls.Presenters;
-using Avalonia.Controls.Templates;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Platform.Storage;
@@ -14,7 +9,6 @@ namespace EncurtadorDownload;
 
 public partial class MainWindow : Window
 {
-
     string? pathWay;
 
     public MainWindow()
@@ -49,33 +43,14 @@ public partial class MainWindow : Window
             btnRepair.BorderBrush = Brushes.Black;
             btnRepair.Foreground = Brushes.Black;
 
-            Efeito(btnSelected);   
-            Efeito(btnDownload);
-            Efeito(btnSearch);
-            Efeito(btnDel);
-            Efeito(btnRepair);
+            new Efeito(btnSelected);   
+            new Efeito(btnDownload);
+            new Efeito(btnSearch);
+            new Efeito(btnDel);
+            new Efeito(btnRepair);
         }
     
 
-    }
-    private void Efeito(Button button)
-    {
-        button.Template = new FuncControlTemplate<Button>((parent, scope) =>
-        {
-            var border = new Border
-            {
-              Background = parent.Background,
-              BorderBrush = parent.BorderBrush,
-              BorderThickness = parent.BorderThickness,
-              Child = new ContentPresenter
-              {
-                Content = parent.Content,
-                HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
-                VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center
-              }  
-            };
-            return border;
-        });
     }
 
     private async void SelectArchive(object? sender, RoutedEventArgs e)
@@ -127,7 +102,7 @@ public partial class MainWindow : Window
 
     private void Deletar(object? sender, RoutedEventArgs e)
     {
-        new NotificacaoDeletar("Você está prestes a deletar um pacote de seu sistema. Se pretende prosseguir, \nescolha uma das duas opções de exclusão de pacotes.", "ATENÇÃO").Show();
+        new NotificacaoDeletar().Show();
     }
 
     private async Task OpenExplorer() {

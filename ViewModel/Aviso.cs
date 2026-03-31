@@ -8,10 +8,12 @@ public class Aviso : Window
 {
     public bool Resultado {get; private set;} = false;
     string package;
+    string type;
 
-    public Aviso(string title, string mensage, string package)
+    public Aviso(string title, string mensage, string package, string type)
     {
         this.package = package;
+        this.type = type;
         Title = title;
         Width = 600;
         Height = 300;
@@ -67,14 +69,57 @@ public class Aviso : Window
 
     private void Confirmate(object? snder, RoutedEventArgs e)
     {
-        Resultado = true;
-        var psi = new ProcessStartInfo
+        if (type == "pacote")
         {
-            FileName = "pkexec",
-            ArgumentList = {"apt", "purge", "-y", package}
-        };
-        Process.Start(psi);
-        this.Close();
+            var psi = new ProcessStartInfo
+            {
+                FileName = "pkexec",
+                ArgumentList = {"apt", "remove", "-y", package},
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+            var process = Process.Start(psi);
+            this.Close();
+
+            string error = process.StandardError.ReadToEnd();
+
+            if (!string.IsNullOrWhiteSpace(error))
+            {
+                new NotificationWindow("Ocorreu um erro ao tentar deletar o pacote.", "ERROR", "Red").Show();
+            } else
+            {
+                var notific = new NotificationWindow("Pacote deletado com sucesso.", "Sucesso", "Green");
+                notific.Show();
+            }
+
+        } else if (type == "all")
+        {
+            Resultado = true;
+            var psi = new ProcessStartInfo
+            {
+                FileName = "pkexec",
+                ArgumentList = {"apt", "purge", "-y", package},
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+            var process = Process.Start(psi);
+            this.Close();
+
+            string error = process.StandardError.ReadToEnd();
+
+            if (!string.IsNullOrWhiteSpace(error))
+            {
+                new NotificationWindow("Ocorreu um erro ao tentar deletar o pacote.", "ERROR", "Red").Show();
+            } else
+            {
+                var notific = new NotificationWindow("Pacote deletado com sucesso.", "Sucesso", "Green");
+                notific.Show();
+            }
+        }
     }
 
     private void Dismiss(object? snder, RoutedEventArgs e)

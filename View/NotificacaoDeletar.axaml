@@ -1,0 +1,38 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+        x:Class="EncurtadorDownload.NotificacaoDeletar"
+        Title="ATENÇÂO"
+        WindowState="Normal"
+        Width="600"
+        Height="300">
+
+        <Canvas Width="600" Height="300" Background="Black">
+
+            <Label Width="500" FontSize="14" Background="Transparent" 
+            Foreground="Red" Canvas.Left="50" Canvas.Right="50" 
+            Canvas.Top="20" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" TextAlignment="Center">
+                    Você está prestes a deletar um pacote de seu sistema.
+                    <LineBreak/>
+                    Se pretende prosseguir, escolha uma das duas opções de exclusão de pacotes.
+                </TextBlock>
+            </Label>
+
+            <TextBox Name="PackageEntry" Width="200" BorderBrush="White" 
+            BorderThickness="2" Foreground="White" Background="Transparent" 
+            Canvas.Top="100" Canvas.Left="200" Canvas.Right="200"/>
+            
+            <Button Content="Deletar apenas pacote" Click="DelPack" 
+            BorderBrush="White" BorderThickness="2" Foreground="White"
+            Canvas.Bottom="25" Canvas.Left="40"/>
+
+            <Button Content="Deletar todos os arquivos" Click="DelAll"
+            BorderBrush="White" BorderThickness="2" Foreground="White"
+            Canvas.Bottom="25" Canvas.Right="40"/>
+
+        </Canvas>
+    
+</Window>
