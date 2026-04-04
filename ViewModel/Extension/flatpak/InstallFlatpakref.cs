@@ -62,7 +62,7 @@ public partial class InstallFlatpakref
             var process = Process.Start(psi);
             if (process == null)
             {
-                new FlatpakInstaller().Show();
+                ShowInstallerAndRetry(archive);
                 return;
             }
 
@@ -70,18 +70,30 @@ public partial class InstallFlatpakref
 
             process.WaitForExit();
 
-            if (process.ExitCode == 0 || !string.IsNullOrWhiteSpace(error))
+            bool flatpakExists = process.ExitCode == 0;
+
+            if (!flatpakExists)
             {
-                new FlatpakInstaller().Show();
+                ShowInstallerAndRetry(archive);
+                return;
             } 
-            else
-            {
-                installer(archive);
-            }
+            
+            installer(archive);
         }
         catch
         {
             new FlatpakInstaller().Show();
         }
+    }
+
+    private void ShowInstallerAndRetry(string archive)
+    {
+        var installed = new FlatpakInstaller();
+        installed.Show();
+
+        installed.Closed += (_, __) =>
+        {
+            Checker(archive);
+        };
     }
 }

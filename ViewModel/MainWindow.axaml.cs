@@ -88,15 +88,15 @@ public partial class MainWindow : Window
 
     private void Instalar(object? sender, RoutedEventArgs e)
     {
-        selectFormatType = GetFormatType(pathWay);
-
-        if(string.IsNullOrWhiteSpace(pathWay))
+        if(pathWay == null)
         {
             var notific = new NotificationWindow("Preencha todos os campos para prosseguir com o download.", "ERRO", "Red");
             notific.Timer();
         }
         else
         {
+            selectFormatType = GetFormatType(pathWay);
+            
             switch (selectFormatType)
             {
                 case formatType.Deb:
