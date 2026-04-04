@@ -1,0 +1,23 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+        x:Class="EncurtadorDownload.SearchAll"
+        Title="Procurar todos os pacotes"
+        WindowState="Normal"
+        Width="500"
+        Height="150">
+    
+        <Canvas Width="500" Height="150" Background="Black">
+            <Label Canvas.Left="25" Canvas.Top="20" Width="450" FontSize="16">
+                <TextBlock TextAlignment="Center">
+                    Escolha um arquivo para procurar todos os pacotes:
+                </TextBlock>
+            </Label>
+
+            <Button Content=".deb" Canvas.Left="25" Canvas.Bottom="20" Click="SearchDeb"/>
+
+            <Button Content=".flatpak" Canvas.Right="25" Canvas.Bottom="20" Click="SearchFlatpak"/>
+        </Canvas>
+</Window>

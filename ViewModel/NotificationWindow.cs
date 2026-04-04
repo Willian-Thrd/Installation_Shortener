@@ -69,14 +69,13 @@ public class NotificationWindow : Window
         
         var scroll = new ScrollViewer
         {
-            Width = 200,
             Height = 100,
             Content = stack
         };
 
         Canvas.SetTop(scroll, 5);
-        Canvas.SetLeft(scroll, 25);
-        Canvas.SetRight(scroll, 25);
+        Canvas.SetLeft(scroll, 0);
+        Canvas.SetRight(scroll, 0);
         Canvas.SetBottom(scroll, 20);
         Canvas.SetBottom(copyButton, 10);
         Canvas.SetLeft(copyButton, 80);

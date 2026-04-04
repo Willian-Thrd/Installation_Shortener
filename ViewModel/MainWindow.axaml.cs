@@ -96,7 +96,7 @@ public partial class MainWindow : Window
         else
         {
             selectFormatType = GetFormatType(pathWay);
-            
+
             switch (selectFormatType)
             {
                 case formatType.Deb:
@@ -119,7 +119,7 @@ public partial class MainWindow : Window
     private void Procurar(object? sender, RoutedEventArgs e)
     {
         if (pathWay == null) {
-            new NotificationWindow("Por favor, preencha todos os campos", "ERROR", "Red").Show();
+            new SearchAll().Show();
         } 
         else 
         {
