@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -10,6 +12,30 @@ namespace EncurtadorDownload;
 public partial class MainWindow : Window
 {
     string? pathWay;
+
+    private enum formatType
+    {
+        Deb,
+        Flatpakref,
+        Unknown
+    }
+    
+    private formatType GetFormatType (string path)
+    {
+        if (path.Contains(".deb"))
+        {
+            return formatType.Deb;
+        } else if (path.Contains(".flatpakref"))
+        {
+            return formatType.Flatpakref;
+        } else
+        {
+            return formatType.Unknown;
+        }
+            
+    }
+
+    private formatType selectFormatType = formatType.Unknown;
 
     public MainWindow()
     {
@@ -62,6 +88,7 @@ public partial class MainWindow : Window
 
     private void Instalar(object? sender, RoutedEventArgs e)
     {
+        selectFormatType = GetFormatType(pathWay);
 
         if(string.IsNullOrWhiteSpace(pathWay))
         {
@@ -70,7 +97,21 @@ public partial class MainWindow : Window
         }
         else
         {
-            var instal = new InstallDeb(pathWay);
+            switch (selectFormatType)
+            {
+                case formatType.Deb:
+                    new InstallDeb(pathWay);
+                break;
+
+                case formatType.Flatpakref:
+                    var service = new InstallFlatpakref();
+                    service.Run(pathWay);
+                break;
+
+                default:
+                    new NotificationWindow("Formato não aceito.", "ERROR", "Red");
+                break;
+            }
         }
         
     }
@@ -113,11 +154,15 @@ public partial class MainWindow : Window
 
             FileTypeFilter = new[]
             {
-                new FilePickerFileType("Arquivos .deb")
+                new FilePickerFileType(".deb")
                 {
                     Patterns = new[] {"*.deb"}
                 },
-                new FilePickerFileType("Todos os arquivos")
+                new FilePickerFileType(".flatpakref")
+                {
+                    Patterns = new[] {"*.flatpakref"}
+                },
+                new FilePickerFileType("Todos os formatos")
                 {
                     Patterns = new[] {"*.*"}
                 }

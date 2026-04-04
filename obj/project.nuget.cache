@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "t4jbCyKZmLA6E1Zq9naVcrqDEhxupqaws4bXPVuoWCwMHeaEs2/+xnk06kBakb7kHMeCRfDd+rzkguEovct/vQ==",
+  "dgSpecHash": "H46xYUAzM3BnGa/orKTZ5bL4n+B+VgcoVvHtVVKKUqfrWo5+zWZCGp+k/CccOFxYFkDMsvJTzASy6Id2Hs/9Iw==",
   "success": true,
-  "projectFilePath": "/media/willian-theodoro/HD secundário/Trabalhos/Projetos/EncurtadorDownload/EncurtadorDownload.csproj",
+  "projectFilePath": "/media/willian-theodoro/HD secundário/Trabalhos/Projetos/Encurtador_Download/EncurtadorDownload.csproj",
   "expectedPackageFiles": [
     "/home/willian-theodoro/.nuget/packages/avalonia/11.3.12/avalonia.11.3.12.nupkg.sha512",
     "/home/willian-theodoro/.nuget/packages/avalonia.angle.windows.natives/2.1.25547.20250602/avalonia.angle.windows.natives.2.1.25547.20250602.nupkg.sha512",
@@ -25,17 +25,13 @@
     "/home/willian-theodoro/.nuget/packages/harfbuzzsharp.nativeassets.webassembly/8.3.1.1/harfbuzzsharp.nativeassets.webassembly.8.3.1.1.nupkg.sha512",
     "/home/willian-theodoro/.nuget/packages/harfbuzzsharp.nativeassets.win32/8.3.1.1/harfbuzzsharp.nativeassets.win32.8.3.1.1.nupkg.sha512",
     "/home/willian-theodoro/.nuget/packages/microcom.runtime/0.11.0/microcom.runtime.0.11.0.nupkg.sha512",
-    "/home/willian-theodoro/.nuget/packages/microsoft.net.illink.tasks/8.0.25/microsoft.net.illink.tasks.8.0.25.nupkg.sha512",
     "/home/willian-theodoro/.nuget/packages/skiasharp/2.88.9/skiasharp.2.88.9.nupkg.sha512",
     "/home/willian-theodoro/.nuget/packages/skiasharp.nativeassets.linux/2.88.9/skiasharp.nativeassets.linux.2.88.9.nupkg.sha512",
     "/home/willian-theodoro/.nuget/packages/skiasharp.nativeassets.macos/2.88.9/skiasharp.nativeassets.macos.2.88.9.nupkg.sha512",
     "/home/willian-theodoro/.nuget/packages/skiasharp.nativeassets.webassembly/2.88.9/skiasharp.nativeassets.webassembly.2.88.9.nupkg.sha512",
     "/home/willian-theodoro/.nuget/packages/skiasharp.nativeassets.win32/2.88.9/skiasharp.nativeassets.win32.2.88.9.nupkg.sha512",
     "/home/willian-theodoro/.nuget/packages/system.io.pipelines/8.0.0/system.io.pipelines.8.0.0.nupkg.sha512",
-    "/home/willian-theodoro/.nuget/packages/tmds.dbus.protocol/0.21.2/tmds.dbus.protocol.0.21.2.nupkg.sha512",
-    "/home/willian-theodoro/.nuget/packages/microsoft.netcore.app.runtime.linux-x64/8.0.25/microsoft.netcore.app.runtime.linux-x64.8.0.25.nupkg.sha512",
-    "/home/willian-theodoro/.nuget/packages/microsoft.aspnetcore.app.runtime.linux-x64/8.0.25/microsoft.aspnetcore.app.runtime.linux-x64.8.0.25.nupkg.sha512",
-    "/home/willian-theodoro/.nuget/packages/microsoft.netcore.app.host.linux-x64/8.0.25/microsoft.netcore.app.host.linux-x64.8.0.25.nupkg.sha512"
+    "/home/willian-theodoro/.nuget/packages/tmds.dbus.protocol/0.21.2/tmds.dbus.protocol.0.21.2.nupkg.sha512"
   ],
   "logs": []
 }
