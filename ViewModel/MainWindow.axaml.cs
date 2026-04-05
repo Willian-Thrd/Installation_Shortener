@@ -141,7 +141,7 @@ public partial class MainWindow : Window
 
     private void Deletar(object? sender, RoutedEventArgs e)
     {
-        new NotificacaoDeletar().Show();
+        new ChooseTypeDelete().Show();
     }
 
     private async Task OpenExplorer() {

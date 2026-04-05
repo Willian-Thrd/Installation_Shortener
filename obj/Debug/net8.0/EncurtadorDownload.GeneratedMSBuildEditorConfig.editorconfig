@@ -22,7 +22,13 @@ build_property.EnableGeneratedComInterfaceComImportInterop =
 [/media/willian-theodoro/HD secundário/Trabalhos/Projetos/Encurtador_Download/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[/media/willian-theodoro/HD secundário/Trabalhos/Projetos/Encurtador_Download/View/Extension/flatpak/ChooseTypeDelete.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [/media/willian-theodoro/HD secundário/Trabalhos/Projetos/Encurtador_Download/View/Extension/flatpak/FlatpakInstaller.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/media/willian-theodoro/HD secundário/Trabalhos/Projetos/Encurtador_Download/View/Extension/flatpak/NotificacaoDeletarFlatpak.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [/media/willian-theodoro/HD secundário/Trabalhos/Projetos/Encurtador_Download/View/Extension/flatpak/SearchAll.axaml]
@@ -31,7 +37,7 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [/media/willian-theodoro/HD secundário/Trabalhos/Projetos/Encurtador_Download/View/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[/media/willian-theodoro/HD secundário/Trabalhos/Projetos/Encurtador_Download/View/NotificacaoDeletar.axaml]
+[/media/willian-theodoro/HD secundário/Trabalhos/Projetos/Encurtador_Download/View/NotificacaoDeletarDeb.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [/media/willian-theodoro/HD secundário/Trabalhos/Projetos/Encurtador_Download/View/RepairWindow.axaml]

@@ -1,0 +1,25 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+        x:Class="EncurtadorDownload.ChooseTypeDelete"
+        Title="Aviso"
+        WindowState="Normal"
+        Width="450"
+        Height="200">
+
+        <Canvas Width="450" Height="200" Background="Black">
+            <Label Width="360" Canvas.Left="45" Canvas.Top="25">
+                <TextBlock TextAlignment="Center">
+                    Atenção. Escolha um tipo de pacote a zse deletar:
+                </TextBlock>
+            </Label>
+
+            <Button Content=".Deb" Canvas.Left="45" Canvas.Bottom="25" BorderBrush="White" 
+            BorderThickness="2" Background="Black" Click="Deb"/>
+
+            <Button Content=".Flatpak" Canvas.Right="45" Canvas.Bottom="25" BorderBrush="White" 
+            BorderThickness="2" Background="Black" Click="Flatpak"/>
+        </Canvas>
+</Window>

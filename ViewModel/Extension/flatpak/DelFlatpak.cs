@@ -4,25 +4,26 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 
-public class Aviso : Window
+public class DelFlatpak : Window
 {
     public bool Resultado {get; private set;} = false;
     string package;
     string type;
 
-    public Aviso(string title, string mensage, string package, string type)
+
+    public DelFlatpak(string title, string mensage, string package, string type)
     {
         this.package = package;
         this.type = type;
         Title = title;
-        Width = 600;
-        Height = 300;
+        Width = 550;
+        Height = 200;
         Background = Brushes.Black;
 
         var canva = new Canvas
         {
-            Width = 600,
-            Height = 300
+            Width = 550,
+            Height = 200
         };
 
         var textBox = new TextBox
@@ -33,7 +34,9 @@ public class Aviso : Window
             VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
             HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
             BorderBrush = Brushes.Black,
-            Foreground = Brushes.Red
+            Foreground = Brushes.Red,
+            TextAlignment = TextAlignment.Center,
+            Width = 500
         };
 
         var confirmButton = new Button
@@ -53,11 +56,11 @@ public class Aviso : Window
         dimissButton.Click += Dismiss;
 
         Canvas.SetTop(textBox, 20);
-        Canvas.SetLeft(textBox, 20);
-        Canvas.SetRight(textBox, 20);
-        Canvas.SetTop(confirmButton, 250);
+        Canvas.SetLeft(textBox, 25);
+        Canvas.SetRight(textBox, 25);
+        Canvas.SetBottom(confirmButton, 25);
         Canvas.SetLeft(confirmButton, 20);
-        Canvas.SetTop(dimissButton, 250);
+        Canvas.SetBottom(dimissButton, 25);
         Canvas.SetRight(dimissButton, 20);
 
         canva.Children.Add(textBox);
@@ -73,8 +76,8 @@ public class Aviso : Window
         {
             var psi = new ProcessStartInfo
             {
-                FileName = "pkexec",
-                ArgumentList = {"apt", "remove", "-y", package},
+                FileName = "flatpak",
+                ArgumentList = {"uninstall", "-y", package},
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false,
@@ -99,8 +102,8 @@ public class Aviso : Window
             Resultado = true;
             var psi = new ProcessStartInfo
             {
-                FileName = "pkexec",
-                ArgumentList = {"apt", "purge", "-y", package},
+                FileName = "flatpak",
+                ArgumentList = {"uninstall", "-y", "--delete-data", package},
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false,

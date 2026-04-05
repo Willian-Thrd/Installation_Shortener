@@ -3,9 +3,9 @@ using Avalonia.Interactivity;
 
 namespace EncurtadorDownload;
 
-public partial class NotificacaoDeletar : Window
+public partial class NotificacaoDeletarDeb : Window
 {
-    public NotificacaoDeletar()
+    public NotificacaoDeletarDeb()
     {
         InitializeComponent();
     }
@@ -16,8 +16,9 @@ public partial class NotificacaoDeletar : Window
 
         string packageName = textEntry;
 
-        if (packageName != null){
-            new Aviso("AVISO", "Deseja deletar o programa?", packageName, "pacote").Show();
+        if (packageName != null)
+        {
+            new DelDeb("AVISO", "Deseja deletar o programa?", packageName, "pacote").Show();
         }
         else
         {
@@ -33,7 +34,7 @@ public partial class NotificacaoDeletar : Window
         string packageName = textEntry;
 
         if (packageName != null){
-            new Aviso("AVISO", "Deseja deletar o programa, incluindo todos os arquivos do sistema do programa e \nconfigurações globais do sistema?", packageName, "all").Show();
+            new DelDeb("AVISO", "Deseja deletar o programa, incluindo todos os arquivos do programa e \nconfigurações globais do sistema?", packageName, "all").Show();
         }
         else
         {
