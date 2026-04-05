@@ -1,4 +1,5 @@
 
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection.Metadata;
@@ -37,8 +38,16 @@ public partial class InstallFlatpakref
 
         if (!string.IsNullOrWhiteSpace(error))
         {
-            new NotificationWindow(error, "ERROR", "Red").Show();
-        } 
+            if (error.Contains("flathub", StringComparison.OrdinalIgnoreCase) &&
+            error.Contains("not found", StringComparison.OrdinalIgnoreCase))
+            {
+                new InstallFlathub("ERROR", "Erro: Flathub não está instalado no sistema.").Show();
+            }
+            else
+            {
+            new NotificationWindow(error, "ERROR", "Red").Show();                
+            }
+        }
         else
         {
             var notific = new NotificationWindow("Download feito com sucesso", "Sucesso", "Lime");
@@ -48,42 +57,37 @@ public partial class InstallFlatpakref
 
     private void Checker(string archive)
     {
-        try {
-            var psi = new ProcessStartInfo
-            {
-                FileName = "flatpak",
-                Arguments = "--version",
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-
-            var process = Process.Start(psi);
-            if (process == null)
-            {
-                ShowInstallerAndRetry(archive);
-                return;
-            }
-
-            string error = process.StandardError.ReadToEnd();
-
-            process.WaitForExit();
-
-            bool flatpakExists = process.ExitCode == 0;
-
-            if (!flatpakExists)
-            {
-                ShowInstallerAndRetry(archive);
-                return;
-            } 
-            
-            installer(archive);
-        }
-        catch
+        var psi = new ProcessStartInfo
         {
-            new FlatpakInstaller().Show();
+            FileName = "flatpak",
+            Arguments = "--version",
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            UseShellExecute = false,
+            CreateNoWindow = true
+        };
+
+        var process = Process.Start(psi);
+        if (process == null)
+        {
+            ShowInstallerAndRetry(archive);
+            return;
         }
+
+        string error = process.StandardError.ReadToEnd();
+
+        process.WaitForExit();
+
+        bool flatpakExists = process.ExitCode == 0;
+
+        if (!flatpakExists)
+        {
+            ShowInstallerAndRetry(archive);
+            return;
+        }
+        
+        installer(archive);
+
     }
 
     private void ShowInstallerAndRetry(string archive)
