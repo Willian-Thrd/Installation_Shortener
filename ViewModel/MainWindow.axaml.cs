@@ -118,13 +118,10 @@ public partial class MainWindow : Window
 
     private void Procurar(object? sender, RoutedEventArgs e)
     {
-        if (pathWay == null) {
-            new SearchAll().Show();
-        } 
-        else 
+        if (pathWay.Contains(".deb")) 
         {
             var deb = new DebPackages();
-            string pkgName = deb.GetFile(pathWay);
+            string pkgName = deb.GetDebFile(pathWay);
 
             var (output, error) = deb.GetPackage(pkgName);
 
@@ -136,6 +133,31 @@ public partial class MainWindow : Window
             {
                 new NotificationWindow(pkgName, "Console", "Lime").Show();
             }
+        }
+
+        else if (pathWay.Contains(".flatpakref"))
+        {
+            var deb = new FlatpakPackages();
+            string pkgName = deb.GetFlatpakFile(pathWay);
+
+            var (output, error) = deb.GetPackage(pkgName);
+
+            if (!string.IsNullOrWhiteSpace(error))
+            {
+                new NotificationWindow(error, "Console", "Red").Show();
+            }
+            else
+            {
+                new NotificationWindow(pkgName, "Console", "Lime").Show();
+            }
+        }
+
+        else if (pathWay == null) {
+            new SearchAll().Show();
+        }
+        else
+        {
+            new NotificationWindow("Formato de arquivo não reconhcido", "ERROR", "Red").Show();
         }
     }
 
@@ -164,7 +186,7 @@ public partial class MainWindow : Window
                 },
                 new FilePickerFileType("Todos os formatos")
                 {
-                    Patterns = new[] {"*.*"}
+                    Patterns = new[] {"*.deb", "*.flatpakref"}
                 }
             }
         });
