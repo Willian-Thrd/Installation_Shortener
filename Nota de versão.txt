@@ -1,0 +1,7 @@
+Versão 1.1 de Gerenciador de Pacotes.
+
+Mudanças feitas no sistema:
+-Extensão para arquivos .flatpakref;
+-Manutenção e correção de bugs;
+-Adaptação e melhoria de códigos de execução;
+-Funções novas e adaptadas para ajudar mais ao usuário.
