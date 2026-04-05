@@ -79,7 +79,7 @@ public partial class RepairFlatpakWindow : Window
 
         if (!string.IsNullOrWhiteSpace(error))
         {
-            new NotificationWindow("Ocorreu um erro ao corrigir dependências", "ERROR", "Red").Show();
+            new NotificationWindow("Ocorreu um erro ao corrigir dependências:\n" + error, "ERROR", "Red").Show();
         }
          else
         {
@@ -89,13 +89,16 @@ public partial class RepairFlatpakWindow : Window
 
     private void FinishDownload(object? sender, RoutedEventArgs e)
     {
-        var archiveSpace = this.FindControl<Label>("ArchiveSpace");
-        string archive = archiveSpace?.Content?.ToString() ?? "";
+        string appId = getId(package);
+        if (string.IsNullOrWhiteSpace(appId))
+        {
+            new NotificationWindow("ID de flatpak inválido", "ERROR", "Red").Show();    
+        }
 
         var psi = new ProcessStartInfo
         {
             FileName = "flatpak",
-            ArgumentList = {"install --reinstall \"{archive}\""},
+            ArgumentList = {"install", "--reinstall", "-y", appId},
             RedirectStandardOutput = true,
             RedirectStandardError = true,
             UseShellExecute = false,
@@ -103,13 +106,14 @@ public partial class RepairFlatpakWindow : Window
         };
 
         var process = Process.Start(psi);
+        process.WaitForExit();
 
         string error = process.StandardError.ReadToEnd();
         string output = process.StandardOutput.ReadToEnd();
 
         if (!string.IsNullOrWhiteSpace(error))
         {
-            new NotificationWindow("Ocorreu um erro ao corrigir dependências", "ERROR", "Red").Show();
+            new NotificationWindow("Ocorreu um erro ao corrigir dependências:\n" + error, "ERROR", "Red").Show();
         }
          else
         {
@@ -141,7 +145,7 @@ public partial class RepairFlatpakWindow : Window
 
         if (!string.IsNullOrWhiteSpace(error))
         {
-            new NotificationWindow(error, "Error", "Red").Show();
+            new NotificationWindow("Erro ao atualizar pacotes:\n" + error, "Error", "Red").Show();
         } 
         else if (string.IsNullOrWhiteSpace(output) || output.Contains("Nothing to do"))
         {
@@ -196,17 +200,22 @@ public partial class RepairFlatpakWindow : Window
         } 
         else 
         {
+            string appId = getId(package);
+            if (string.IsNullOrWhiteSpace(appId))
+            {
+                new NotificationWindow("ID de flatpak inválido", "ERROR", "Red").Show();    
+            }
+
             var psi = new ProcessStartInfo
             {
                 FileName = "flatpak",
-                ArgumentList = {"uninstall", "-y", package},
+                ArgumentList = {"install", "--reinstall", "-y", appId},
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false
             };
 
             var process = Process.Start(psi);
-
             process.WaitForExit();
 
             string error = process.StandardError.ReadToEnd();
@@ -214,7 +223,7 @@ public partial class RepairFlatpakWindow : Window
 
             if (!string.IsNullOrWhiteSpace(error))
             {
-                new NotificationWindow(error, "Error", "Red").Show();
+                new NotificationWindow("Erro ao reinstalar pacote:\n" + error, "Error", "Red").Show();
             } 
             else
             {
@@ -223,7 +232,7 @@ public partial class RepairFlatpakWindow : Window
         }
     }
 
-    private string getId(string file)
+    private string getId(string? file)
     {
         foreach (var line in File.ReadAllLines(file))
         {

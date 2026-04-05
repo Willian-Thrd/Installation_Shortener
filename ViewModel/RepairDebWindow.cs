@@ -1,5 +1,6 @@
 using System.Diagnostics;
-    using Avalonia.Controls;
+using System.IO;
+using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Platform.Storage;
@@ -8,6 +9,7 @@ namespace EncurtadorDownload;
 public partial class RepairDebWindow : Window
 {
     private string? package;
+    string appId;
     public RepairDebWindow()
     {
         InitializeComponent();
@@ -87,36 +89,28 @@ public partial class RepairDebWindow : Window
 
         if (!string.IsNullOrWhiteSpace(error))
         {
-            new NotificationWindow("Ocorreu um erro ao corrigir dependências", "ERROR", "Red").Show();
+            new NotificationWindow("Ocorreu um erro ao corrigir dependências:\n" + error, "ERROR", "Red").Show();
         }
          else
         {
-            new NotificationWindow("Dependências corrigidas com sucesso", "SUCESSO", "Lime").Show();
+            new NotificationWindow("Dependências corrigidas com sucesso:\n" + output, "SUCESSO", "Lime").Show();
         }
     }
 
     private void FinishDownload(object? sender, RoutedEventArgs e)
     {
-        var psi = new ProcessStartInfo
-        {
-            FileName = "pkexec",
-            ArgumentList = {"dpkg --configure -a"},
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            UseShellExecute = false,
-            CreateNoWindow = true
-        };
-
-        var process = Process.Start(psi);
-
-        string error = process.StandardError.ReadToEnd();
-        string output = process.StandardOutput.ReadToEnd();
+        var (output, error) = ExecuteCommand("pkexec", "dpkg --configure -a");
+        var (output2, error2) = ExecuteCommand("pkexec", "apt-get --fix-broken install -y");
 
         if (!string.IsNullOrWhiteSpace(error))
         {
-            new NotificationWindow("Ocorreu um erro ao corrigir dependências", "ERROR", "Red").Show();
+            new NotificationWindow("Ocorreu um erro ao corrigir dependências:\n" + error, "ERROR", "Red").Show();
+        } 
+        else if (!string.IsNullOrWhiteSpace(error2))
+        {
+            new NotificationWindow("Erro ao corrigir dependências:\n" + error2, "ERROR", "Red").Show();    
         }
-         else
+        else
         {
             new NotificationWindow("Dependências corrigidas com sucesso", "Sucesso", "Lime").Show();
         }
@@ -184,7 +178,7 @@ public partial class RepairDebWindow : Window
         var psi = new ProcessStartInfo
         {
             FileName = "pkexec",
-            ArgumentList = {"apt update"},
+            ArgumentList = {"apt-get", "update"},
             RedirectStandardOutput = true,
             RedirectStandardError = true,
             UseShellExecute = false,
@@ -198,7 +192,7 @@ public partial class RepairDebWindow : Window
 
         if (!string.IsNullOrWhiteSpace(error))
         {
-            new NotificationWindow(error, "Error", "Red").Show();
+            new NotificationWindow("Erro ao atualizar lista:\n" + error, "Error", "Red").Show();
         } 
         else
         {
@@ -209,28 +203,20 @@ public partial class RepairDebWindow : Window
 
     private void UpdateAll(object? sender, RoutedEventArgs e)
     {
-        var psi = new ProcessStartInfo
-        {
-            FileName = "pkexec",
-            ArgumentList = {"apt -y upgrade"},
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            UseShellExecute = false,
-            CreateNoWindow = true
-        };
-
-        var process = Process.Start(psi);
-
-        string error = process.StandardError.ReadToEnd();
-        string output = process.StandardOutput.ReadToEnd();
+        var (output, error) = ExecuteCommand("pkexec", "apt-get update");
+        var (output2, error2) = ExecuteCommand("pkexec", "apt-get upgrade -y");
 
         if (!string.IsNullOrWhiteSpace(error))
         {
-            new NotificationWindow(error, "Error", "Red").Show();
+            new NotificationWindow("Erro ao atualizar toda a lista:\n" + error, "Error", "Red").Show();
         } 
+        else if (!string.IsNullOrEmpty(error2))
+        {
+            new NotificationWindow("Erro ao atualizar toda a lista:\n" + error2, "Error", "Red").Show();
+        }
         else
         {
-            new NotificationWindow(output, "Sucesso", "White").Show();
+            new NotificationWindow(output2, "Sucesso", "White").Show();
         }
     }
 
@@ -293,7 +279,7 @@ public partial class RepairDebWindow : Window
 
             if (!string.IsNullOrWhiteSpace(error))
             {
-                new NotificationWindow(error, "Error", "Red").Show();
+                new NotificationWindow("Erro ao reinstalar pacote:\n" + error, "Error", "Red").Show();
             } 
             else
             {
@@ -322,5 +308,18 @@ public partial class RepairDebWindow : Window
         process.WaitForExit();
 
         return (output, error);
+    }
+
+    private string getId(string? file)
+    {
+        foreach (var line in File.ReadAllLines(file))
+        {
+            if (line.StartsWith("Name="))
+            {
+                return line.Substring(5).Trim();
+            }
+        }
+
+        return null;
     }
 }
