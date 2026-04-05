@@ -1,30 +1,31 @@
 using System.Diagnostics;
-using System.Threading.Tasks;
+using System.IO;
+using System.Runtime.CompilerServices;
 using Avalonia.Controls;
+using Avalonia.Controls.Shapes;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Platform.Storage;
+using Tmds.DBus.Protocol;
 
 namespace EncurtadorDownload;
-public partial class RepairWindow : Window
+public partial class RepairFlatpakWindow : Window
 {
     private string? package;
-    public RepairWindow()
+
+    public RepairFlatpakWindow()
     {
         InitializeComponent();
 
         var btnRepair = this.FindControl<Button>("RepairButton");
         var btnFinalize = this.FindControl<Button>("FinalizeButton");
-        var btnSearch = this.FindControl<Button>("SearchButton");
         var btnUpdate = this.FindControl<Button>("UpdateButton");
-        var btnUpdateList = this.FindControl<Button>("btnUpdateList");
         var btnUpdateAll = this.FindControl<Button>("btnUpdateAll");
         var btnSelectArchive = this.FindControl<Button>("btnSelectArchive");
         var btnReinstallPackage = this.FindControl<Button>("btnReinstallPackage");
         
-        if (btnFinalize != null && btnRepair != null && btnSearch != null 
-        && btnUpdate != null && btnUpdateList != null && btnUpdateAll != null
-        && btnSelectArchive != null && btnReinstallPackage != null)
+        if (btnFinalize != null && btnRepair != null && btnUpdate != null  
+        && btnUpdateAll != null && btnSelectArchive != null && btnReinstallPackage != null)
         {
             btnRepair.Background = Brushes.White;
             btnRepair.BorderBrush = Brushes.Black;
@@ -34,17 +35,9 @@ public partial class RepairWindow : Window
             btnFinalize.BorderBrush = Brushes.Black;
             btnFinalize.Foreground = Brushes.Black;
 
-            btnSearch.Background = Brushes.White;
-            btnSearch.BorderBrush = Brushes.Black;
-            btnSearch.Foreground = Brushes.Black;
-
             btnUpdate.Background = Brushes.White;
             btnUpdate.BorderBrush = Brushes.Black;
             btnUpdate.Foreground = Brushes.Black;
-
-            btnUpdateList.Background = Brushes.White;
-            btnUpdateList.BorderBrush = Brushes.Black;
-            btnUpdateList.Foreground = Brushes.Black;
 
             btnUpdateAll.Background = Brushes.White;
             btnUpdateAll.BorderBrush = Brushes.Black;
@@ -60,21 +53,19 @@ public partial class RepairWindow : Window
 
             new Efeito(btnRepair);
             new Efeito(btnFinalize);
-            new Efeito(btnSearch);
             new Efeito(btnUpdate);
-            new Efeito(btnUpdateList);
             new Efeito(btnUpdateAll);
             new Efeito(btnSelectArchive);
             new Efeito(btnReinstallPackage);
         }
     }
 
-    private void RepairDep(object? sender, RoutedEventArgs e)
+    private void RepairFlatpak(object? sender, RoutedEventArgs e)
     {
         var psi = new ProcessStartInfo
         {
-            FileName = "pkexec",
-            ArgumentList = {"apt install -f"},
+            FileName = "flatpak",
+            Arguments = "repair",
             RedirectStandardOutput = true,
             RedirectStandardError = true,
             UseShellExecute = false,
@@ -98,10 +89,13 @@ public partial class RepairWindow : Window
 
     private void FinishDownload(object? sender, RoutedEventArgs e)
     {
+        var archiveSpace = this.FindControl<Label>("ArchiveSpace");
+        string archive = archiveSpace?.Content?.ToString() ?? "";
+
         var psi = new ProcessStartInfo
         {
-            FileName = "pkexec",
-            ArgumentList = {"dpkg --configure -a"},
+            FileName = "flatpak",
+            ArgumentList = {"install --reinstall \"{archive}\""},
             RedirectStandardOutput = true,
             RedirectStandardError = true,
             UseShellExecute = false,
@@ -123,47 +117,10 @@ public partial class RepairWindow : Window
         }
     }
 
-    private async void SearchBroken(object? sender, RoutedEventArgs e)
-    {
-        var psi = new ProcessStartInfo
-        {
-            FileName = "pkexec",
-            ArgumentList = {"bash", "-c", "dpkg -l | grep '^..r'"},
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            UseShellExecute = false,
-            CreateNoWindow = true
-        };
-
-        var process = new Process { StartInfo = psi };
-
-        process.Start();
-
-        string output = await process.StandardOutput.ReadToEndAsync();
-        string error = await process.StandardError.ReadToEndAsync();
-
-        await process.WaitForExitAsync();
-
-        if (!string.IsNullOrWhiteSpace(error))
-        {
-            new NotificationWindow(error, "ERROR", "Red").Show();
-        }         else if (!string.IsNullOrWhiteSpace(output))
-        {
-            new NotificationWindow(output, "Pacotes Encontrados", "Orage").Show();
-        } 
-        else
-        {
-            new NotificationWindow("Nenhum pacote quebrado encontrado.", "Sucesso", "Lime").Show();
-        }
-    }
-
     private void SearchUpdates(object? sender, RoutedEventArgs e)
     {
-        var (upgrateOutput, upgradeError) = ExecuteCommand("apt-get", "-s upgrade");
-        var (autoOutput, autoError) = ExecuteCommand("apt-get", "-s autoremove");
-
-        bool hasUpdates = !upgrateOutput.Contains("0 upgraded");
-        bool hasTrash = !autoOutput.Contains("0 to remove");
+        var (upgrateOutput, upgradeError) = ExecuteCommand("flatpak", "remote-ls --updates");
+        
 
         if (!string.IsNullOrWhiteSpace(upgradeError))
         {
@@ -171,64 +128,25 @@ public partial class RepairWindow : Window
             return;
         }
 
-        string menssage = "";
+        bool hasUpdates = upgrateOutput.Contains("Nothing to do");
 
-        menssage += hasUpdates ? "Atualizações disponíveis:\n" : "Nenhuma atualização disponível.\n";
-        
-        menssage += hasTrash ? "Pacotes para remoção automática:\n" : "Nenhum pacote para remoção automática.";
+        string menssage = hasUpdates ? "Atualizações disponíveis:\n" : "Nenhuma atualização disponível.\n";
 
         new NotificationWindow(menssage, "Satatus do Sistema", "Lime").Show();
     }
 
-    private void UpdateList(object? sender, RoutedEventArgs e)
-    {
-        var psi = new ProcessStartInfo
-        {
-            FileName = "pkexec",
-            ArgumentList = {"apt update"},
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            UseShellExecute = false,
-            CreateNoWindow = true
-        };
-
-        var process = Process.Start(psi);
-
-        string error = process.StandardError.ReadToEnd();
-        string output = process.StandardOutput.ReadToEnd();
-
-        if (!string.IsNullOrWhiteSpace(error))
-        {
-            new NotificationWindow(error, "Error", "Red").Show();
-        } 
-        else
-        {
-            new NotificationWindow(output, "Sucesso", "White").Show();
-        }
-
-    }
-
     private void UpdateAll(object? sender, RoutedEventArgs e)
     {
-        var psi = new ProcessStartInfo
-        {
-            FileName = "pkexec",
-            ArgumentList = {"apt -y upgrade"},
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            UseShellExecute = false,
-            CreateNoWindow = true
-        };
-
-        var process = Process.Start(psi);
-
-        string error = process.StandardError.ReadToEnd();
-        string output = process.StandardOutput.ReadToEnd();
+        var (output, error) = ExecuteCommand("flatpak", "update -y");
 
         if (!string.IsNullOrWhiteSpace(error))
         {
             new NotificationWindow(error, "Error", "Red").Show();
         } 
+        else if (string.IsNullOrWhiteSpace(output) || output.Contains("Nothing to do"))
+        {
+            new NotificationWindow("Nada a se atualizar.", "Notificação", "White").Show();
+        }
         else
         {
             new NotificationWindow(output, "Sucesso", "White").Show();
@@ -246,9 +164,9 @@ public partial class RepairWindow : Window
 
             FileTypeFilter = new[]
             {
-                new FilePickerFileType("Arquivos .deb")
+                new FilePickerFileType("Arquivos .flatpakref")
                 {
-                    Patterns = new[] {"*.deb"}
+                    Patterns = new[] {"*.flatpakref"}
                 },
                 new FilePickerFileType("Todos os arquivos")
                 {
@@ -280,14 +198,16 @@ public partial class RepairWindow : Window
         {
             var psi = new ProcessStartInfo
             {
-                FileName = "pkexec",
-                Arguments = $"env DEBIAN_FRONTEND=noninteractive apt-get install --reinstall -y {package}",
+                FileName = "flatpak",
+                ArgumentList = {"uninstall", "-y", package},
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false
             };
 
             var process = Process.Start(psi);
+
+            process.WaitForExit();
 
             string error = process.StandardError.ReadToEnd();
             string output = process.StandardOutput.ReadToEnd();
@@ -301,6 +221,19 @@ public partial class RepairWindow : Window
                 new NotificationWindow(output, "Sucesso", "White").Show();
             }
         }
+    }
+
+    private string getId(string file)
+    {
+        foreach (var line in File.ReadAllLines(file))
+        {
+            if (line.StartsWith("Name="))
+            {
+                return line.Substring(5).Trim();
+            }
+        }
+
+        return null;
     }
 
     private (string output, string error) ExecuteCommand(string arg1, string arg2)

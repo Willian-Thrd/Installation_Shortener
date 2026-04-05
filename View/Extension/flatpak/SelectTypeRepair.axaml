@@ -1,0 +1,30 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+        x:Class="EncurtadorDownload.SelectTypeRepair"
+        Title="Slecione tipo de reparo"
+        WindowState="Normal"
+        Background="White"
+        Width="300"
+        Height="150">
+    
+        <Canvas Width="300" Height="150" Background="White">
+            <Label Foreground="Black" Canvas.Left="25" Canvas.Top="20" Width="250" FontSize="16">
+                <TextBlock TextAlignment="Center">
+                    Selecione um tipo de reparo:
+                </TextBlock>
+            </Label>
+
+            <Button Content="Deb" Foreground="Black" BorderBrush="Black" 
+            BorderThickness="2" Canvas.Left="25" Canvas.Bottom="20" 
+            Click="DebRepair" Name="btnDebRepair" Width="50" Height="21"
+            HorizontalContentAlignment="Center" FontSize="15"/>
+
+            <Button Content="Flatpak" Foreground="Black" BorderBrush="Black" 
+            BorderThickness="2" Canvas.Right="25" Canvas.Bottom="20" 
+            Click="FlatpakRepair" Name="btnFlatpakRepair" Width="80" Height="21"
+            HorizontalContentAlignment="Center" FontSize="15"/>
+        </Canvas>
+</Window>

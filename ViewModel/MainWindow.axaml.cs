@@ -71,7 +71,7 @@ public partial class MainWindow : Window
             btnRepair.BorderBrush = Brushes.Black;
             btnRepair.Foreground = Brushes.Black;
 
-            new Efeito(btnSelected);   
+            new Efeito(btnSelected);
             new Efeito(btnDownload);
             new Efeito(btnSearch);
             new Efeito(btnDel);
@@ -159,7 +159,6 @@ public partial class MainWindow : Window
                 new NotificationWindow("Falha ao ler flatpakref", "ERROR", "Red").Show();
                 return; 
             }
-            return;
         }
         
         new NotificationWindow("Formato de arquivo não reconhcido", "ERROR", "Red").Show();
@@ -209,6 +208,6 @@ public partial class MainWindow : Window
 
     private void RepairPackage(object? sender, RoutedEventArgs e)
     {
-        new RepairWindow().Show();
+        new SelectTypeRepair().Show();
     }
 }

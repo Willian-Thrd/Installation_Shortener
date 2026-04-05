@@ -31,7 +31,13 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [/media/willian-theodoro/HD secundário/Trabalhos/Projetos/Encurtador_Download/View/Extension/flatpak/NotificacaoDeletarFlatpak.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[/media/willian-theodoro/HD secundário/Trabalhos/Projetos/Encurtador_Download/View/Extension/flatpak/RepairFlatpakWindow.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [/media/willian-theodoro/HD secundário/Trabalhos/Projetos/Encurtador_Download/View/Extension/flatpak/SearchAll.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/media/willian-theodoro/HD secundário/Trabalhos/Projetos/Encurtador_Download/View/Extension/flatpak/SelectTypeRepair.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [/media/willian-theodoro/HD secundário/Trabalhos/Projetos/Encurtador_Download/View/MainWindow.axaml]
@@ -40,5 +46,5 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [/media/willian-theodoro/HD secundário/Trabalhos/Projetos/Encurtador_Download/View/NotificacaoDeletarDeb.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[/media/willian-theodoro/HD secundário/Trabalhos/Projetos/Encurtador_Download/View/RepairWindow.axaml]
+[/media/willian-theodoro/HD secundário/Trabalhos/Projetos/Encurtador_Download/View/RepairDebWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
